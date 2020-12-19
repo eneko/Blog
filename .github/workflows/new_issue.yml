@@ -5,7 +5,7 @@ name: New Issue
 # Controls when the action will run. 
 on:
   issues:
-    types: [opened]
+    types: [opened, edited]
     
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -30,4 +30,4 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Dump
         run: |
-          echo "#${{ github.event.issue }}"
+          echo "#${{ github.event.issue.body }}"
