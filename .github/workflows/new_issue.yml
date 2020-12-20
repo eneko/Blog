@@ -1,8 +1,5 @@
-# This is a basic workflow to help you get started with Actions
-
 name: New Issue
 
-# Controls when the action will run.
 on:
   issues:
     types: [opened, edited]
@@ -10,14 +7,9 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   processIssue:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
@@ -35,3 +27,18 @@ jobs:
       - name: Swift Environment
         run: |
           swift run
+
+  pushToSNS:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+      - uses: isbang/sqs-action@v0.1.1
+        with:
+          sqs-url: https://sqs.us-west-2.amazonaws.com/855037544458/blog-issue-updates
+          message: '{ "issueId": ${{ github.event.issue.number }} }'
+          
