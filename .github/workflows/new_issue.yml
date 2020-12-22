@@ -21,5 +21,4 @@ jobs:
       - uses: isbang/sqs-action@v0.1.1
         with:
           sqs-url: https://sqs.us-west-2.amazonaws.com/855037544458/blog-issue-updates
-          message: '{ "issueId": ${{github.event.issue.number}}, "user": "${{github.event.issue.user.login}}", "event": "${{github.event_name}}", "action": "${{github.action}}" }'
-          
+          message: ${{ toJSON(github) }}
