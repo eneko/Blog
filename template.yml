@@ -18,4 +18,4 @@ Resources:
             Properties:
               Queue: arn:aws:sqs:us-west-2:855037544458:blog-issue-updates
               BatchSize: 10
-              Enabled: false
+              Enabled: true

@@ -2,15 +2,6 @@
   "object": {
     "pins": [
       {
-        "package": "GitHub",
-        "repositoryURL": "https://github.com/eneko/GitHub",
-        "state": {
-          "branch": null,
-          "revision": "15da0d97d49d7fab76a9847c0cf1c2fe4bd49e55",
-          "version": "0.1.0"
-        }
-      },
-      {
         "package": "swift-aws-lambda-runtime",
         "repositoryURL": "https://github.com/swift-server/swift-aws-lambda-runtime",
         "state": {
