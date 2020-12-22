@@ -10,7 +10,7 @@ on:
 jobs:
   pushToSNS:
     runs-on: ubuntu-latest
-    if: ${{ github.event.issue.user.login == "eneko" }}
+    if: ${{ github.event.issue.user.login == github.repository_owner }} # only owner issues
     steps:
       - uses: aws-actions/configure-aws-credentials@v1
         with:
