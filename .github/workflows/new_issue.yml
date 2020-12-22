@@ -8,28 +8,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  processIssue:
-    runs-on: ubuntu-latest
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      # Runs a single command using the runners shell
-      - name: Issue Number
-        run: |
-          echo "New issue #${{ github.event.issue.number }}"
-
-      # Runs a set of commands using the runners shell
-      - name: Dump
-        run: |
-          echo "#${{ github.event.issue.body }}"
-
-      - name: Swift Environment
-        run: |
-          swift run
-
   pushToSNS:
     runs-on: ubuntu-latest
+    if: ${{ github.event.issue.user.login == "eneko" }}
     steps:
       - uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -40,5 +21,5 @@ jobs:
       - uses: isbang/sqs-action@v0.1.1
         with:
           sqs-url: https://sqs.us-west-2.amazonaws.com/855037544458/blog-issue-updates
-          message: '{ "issueId": ${{ github.event.issue.number }} }'
+          message: '{ "issueId": ${{github.event.issue.number}}, "user": "${{github.event.issue.user.login}}", "event": "${{github.event_name}}", "action": "${{github.action}}" }'
           
