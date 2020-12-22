@@ -1,0 +1,9 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "blog-engine"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-tdf39o5sbw5s"
+s3_prefix = "blog-engine"
+region = "us-west-2"
+capabilities = "CAPABILITY_IAM"
