@@ -24,4 +24,12 @@ final class BlogTests: XCTestCase {
         XCTAssertEqual(payload.eventName, "issues")
         XCTAssertEqual(payload.event.action, "opened")
     }
+
+    func testRenderer() throws {
+        let logger = Logger(label: "parser-test")
+        let parser = IssueParser(logger: logger)
+        let payload = try parser.parse(eventPayload: gitHubIssueEvent)
+        let post = PostRenderer().render(issue: payload.event.issue)
+        print(post)
+    }
 }
