@@ -30,6 +30,6 @@ final class BlogTests: XCTestCase {
         let parser = IssueParser(logger: logger)
         let payload = try parser.parse(eventPayload: gitHubIssueEvent)
         let post = PostRenderer().render(issue: payload.event.issue)
-        print(post)
+        XCTAssertTrue(post.contains("https://github.com/eneko/Blog/issues/4"))
     }
 }

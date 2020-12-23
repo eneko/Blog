@@ -20,8 +20,9 @@ public struct PostRenderer {
     public init() {}
 
     public func render(issue: GitHubIssue) -> String {
-        let tags = issue.labels.map { "\"\($0.name)\"" }.joined(separator: " ")
-        let keywords = issue.labels.map { $0.name }.joined(separator: ", ")
+        let labels = issue.labels.map { $0.name.replacingOccurrences(of: " ", with: "-") }
+        let tags = labels.joined(separator: " ")
+        let keywords = labels.joined(separator: ", ")
         let post = """
                   ---
                   layout: post
