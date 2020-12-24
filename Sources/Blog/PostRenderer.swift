@@ -13,16 +13,27 @@ public struct PostRenderer {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter
     }()
 
-    public init() {}
+    let issue: GitHubIssue
 
-    public func render(issue: GitHubIssue) -> String {
+    public init(issue: GitHubIssue) {
+        self.issue = issue
+    }
+
+    public var filename: String {
+        let date = Self.formatter.string(from: issue.createdAt)
+        return "_posts/\(date)-issue-\(issue.number).md"
+    }
+
+    public func render() -> String {
         let labels = issue.labels.map { $0.name.replacingOccurrences(of: " ", with: "-") }
         let tags = labels.joined(separator: " ")
         let keywords = labels.joined(separator: ", ")
+        let body = issue.body.replacingOccurrences(of: "\r\n", with: "\n")
+
         let post = """
                   ---
                   layout: post
@@ -35,7 +46,7 @@ public struct PostRenderer {
 
                   <span class="issue-number"><b>Issue <a target="_blank" href="https://github.com/eneko/Blog/issues/\(issue.number)">#\(issue.number)</a></b></span>
 
-                  \(issue.body)
+                  \(body)
 
                   ---
 

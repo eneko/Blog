@@ -29,7 +29,15 @@ final class BlogTests: XCTestCase {
         let logger = Logger(label: "parser-test")
         let parser = IssueParser(logger: logger)
         let payload = try parser.parse(eventPayload: gitHubIssueEvent)
-        let post = PostRenderer().render(issue: payload.event.issue)
+        let post = PostRenderer(issue: payload.event.issue).render()
         XCTAssertTrue(post.contains("https://github.com/eneko/Blog/issues/4"))
+    }
+
+    func testRendererFilename() throws {
+        let logger = Logger(label: "parser-test")
+        let parser = IssueParser(logger: logger)
+        let payload = try parser.parse(eventPayload: gitHubIssueEvent)
+        let filename = PostRenderer(issue: payload.event.issue).filename
+        XCTAssertEqual(filename, "_posts/2020-12-22-issue-4.md")
     }
 }

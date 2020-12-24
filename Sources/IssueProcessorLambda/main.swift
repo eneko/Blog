@@ -1,5 +1,6 @@
 import AWSLambdaRuntime
 import AWSLambdaEvents
+import Dispatch
 import NIO
 import Blog
 
@@ -19,10 +20,15 @@ struct Handler: LambdaHandler {
 
     func handle(context: Lambda.Context, event: In, callback: @escaping (Result<Out, Error>) -> Void) {
         do {
+            let group = DispatchGroup()
             for message in event.records {
+                group.enter()
                 let githubContext = try parser.parse(eventPayload: message.body)
-                try processor.process(githubEvent: githubContext.event)
+                try processor.process(githubEvent: githubContext.event) {
+                    group.leave()
+                }
             }
+            group.wait()
             callback(.success(""))
         }
         catch {
