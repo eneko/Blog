@@ -12,7 +12,7 @@ public struct PostRenderer {
     static let formatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        dateFormatter.timeZone = TimeZone(identifier: "America/Los_Angeles") // for region us-west-2
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter
     }()
