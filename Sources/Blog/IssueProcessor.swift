@@ -38,6 +38,11 @@ public struct IssueProcessor {
     public func process(githubEvent: GitHubEvent, completion: @escaping () -> Void) throws {
         logger.debug("Event: \(githubEvent)")
 
+        if githubEvent.issue.labels.contains(where: { $0.name == "draft" }) {
+            logger.info("Draft label found: skipping issue")
+            return
+        }
+
         let renderer = PostRenderer(issue: githubEvent.issue)
         let content = renderer.render()
         let filename = renderer.filename

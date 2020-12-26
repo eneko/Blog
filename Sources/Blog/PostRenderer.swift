@@ -35,23 +35,23 @@ public struct PostRenderer {
         let body = issue.body.replacingOccurrences(of: "\r\n", with: "\n")
 
         let post = """
-                  ---
-                  layout: post
-                  title: \(issue.title)
-                  permalink: /articles/:title
-                  date: \(Self.formatter.string(from: issue.createdAt))
-                  keywords: \(keywords)
-                  tags: \(tags)
-                  ---
+            ---
+            layout: post
+            title: \(issue.title)
+            permalink: /articles/:title
+            date: \(Self.formatter.string(from: issue.createdAt))
+            keywords: \(keywords)
+            tags: \(tags)
+            ---
 
-                  <span class="issue-number"><b>Issue <a target="_blank" href="https://github.com/eneko/Blog/issues/\(issue.number)">#\(issue.number)</a></b></span>
+            <span class="issue-number"><b>Issue <a target="_blank" href="https://github.com/eneko/Blog/issues/\(issue.number)">#\(issue.number)</a></b></span>
 
-                  \(body)
+            \(body)
 
-                  ---
+            ---
 
-                  <i><small>This article was written as an issue on my Blog repository on GitHub (see <a target="_blank" href="https://github.com/eneko/Blog/issues/\(issue.number)">Issue #\(issue.number)</a>)</small></i>
-                  """
+            <i><small>This article was written as an issue on my Blog repository on GitHub (see <a target="_blank" href="https://github.com/eneko/Blog/issues/\(issue.number)">Issue #\(issue.number)</a>)</small></i>
+            """
         return post
     }
 }
