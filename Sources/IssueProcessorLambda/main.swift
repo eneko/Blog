@@ -10,6 +10,7 @@ import AWSLambdaEvents
 import Dispatch
 import NIO
 import Blog
+import IssueParser
 
 struct Handler: LambdaHandler {
     typealias In = SQS.Event
@@ -30,7 +31,7 @@ struct Handler: LambdaHandler {
             let group = DispatchGroup()
             for message in event.records {
                 group.enter()
-                let githubContext = try parser.parse(eventPayload: message.body)
+                let githubContext = try parser.parseContext(json: message.body)
                 try processor.process(githubEvent: githubContext.event) {
                     group.leave()
                 }

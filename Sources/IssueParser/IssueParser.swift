@@ -26,7 +26,11 @@ public struct IssueParser {
         decoder.dateDecodingStrategy = .formatted(dateFormatter)
     }
 
-    public func parse(eventPayload: String) throws -> GitHubContext {
-        return try decoder.decode(GitHubContext.self, from: Data(eventPayload.utf8))
+    public func parseContext(json: String) throws -> GitHubContext {
+        return try decoder.decode(GitHubContext.self, from: Data(json.utf8))
+    }
+
+    public func parseIssue(json: String) throws -> GitHubIssue {
+        return try decoder.decode(GitHubIssue.self, from: Data(json.utf8))
     }
 }

@@ -18,15 +18,21 @@ let package = Package(
     targets: [
         .target(name: "IssueProcessorLambda", dependencies: [
             "Blog",
+            "IssueParser",
             .product(name: "AWSLambdaRuntime", package: "swift-aws-lambda-runtime"),
             .product(name: "AWSLambdaEvents", package: "swift-aws-lambda-runtime"),
         ]),
         .target(name: "Blog", dependencies: [
+            "IssueParser",
+            .product(name: "Logging", package: "swift-log"),
+        ]),
+        .target(name: "IssueParser", dependencies: [
             .product(name: "Logging", package: "swift-log"),
         ]),
         .target(name: "SocialPreviewGenerator", dependencies: [
             "DateTemplates",
+            "IssueParser",
         ]),
-        .testTarget(name: "BlogTests", dependencies: ["Blog"]),
+        .testTarget(name: "BlogTests", dependencies: ["Blog", "IssueParser"]),
     ]
 )

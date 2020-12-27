@@ -1,5 +1,6 @@
 import XCTest
 import Blog
+import IssueParser
 import struct Logging.Logger
 
 func loadJSON<T: Codable>(json: String) throws -> T {
@@ -20,7 +21,7 @@ final class BlogTests: XCTestCase {
     func testParser() throws {
         let logger = Logger(label: "parser-test")
         let parser = IssueParser(logger: logger)
-        let payload = try parser.parse(eventPayload: gitHubIssueEvent)
+        let payload = try parser.parseContext(json: gitHubIssueEvent)
         XCTAssertEqual(payload.eventName, "issues")
         XCTAssertEqual(payload.event.action, "opened")
     }
@@ -28,7 +29,7 @@ final class BlogTests: XCTestCase {
     func testRenderer() throws {
         let logger = Logger(label: "parser-test")
         let parser = IssueParser(logger: logger)
-        let payload = try parser.parse(eventPayload: gitHubIssueEvent)
+        let payload = try parser.parseContext(json: gitHubIssueEvent)
         let post = PostRenderer(issue: payload.event.issue).render()
         XCTAssertTrue(post.contains("https://github.com/eneko/Blog/issues/4"))
     }
@@ -36,7 +37,7 @@ final class BlogTests: XCTestCase {
     func testRendererFilename() throws {
         let logger = Logger(label: "parser-test")
         let parser = IssueParser(logger: logger)
-        let payload = try parser.parse(eventPayload: gitHubIssueEvent)
+        let payload = try parser.parseContext(json: gitHubIssueEvent)
         let filename = PostRenderer(issue: payload.event.issue).filename
         XCTAssertEqual(filename, "_posts/2020-12-22-issue-4.md")
     }

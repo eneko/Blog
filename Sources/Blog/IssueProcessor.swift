@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import IssueParser
 import struct Logging.Logger
 #if canImport(FoundationNetworking)
 import FoundationNetworking
