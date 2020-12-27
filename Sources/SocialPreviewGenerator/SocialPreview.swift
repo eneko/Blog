@@ -5,6 +5,8 @@
 //  Created by Eneko Alonso on 12/26/20.
 //
 
+#if canImport(SwiftUI)
+
 import SwiftUI
 import DateTemplates
 
@@ -89,3 +91,5 @@ struct ContentView_Previews: PreviewProvider {
             .frame(width: 1280, height: 640)
     }
 }
+
+#endif
