@@ -5,7 +5,19 @@ on:
     types: [edited, labeled, unlabeled]
 
 jobs:
+  generateSocialPreview:
+    runs-on: macos-latest
+    if: ${{ github.event.issue.user.login == github.repository_owner }} # only owner issues
+    steps:
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+      - run: |
+          aws s3 ls
   pushToSNS:
+    needs: generateSocialPreview
     runs-on: ubuntu-latest
     if: ${{ github.event.issue.user.login == github.repository_owner }} # only owner issues
     steps:
