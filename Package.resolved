@@ -2,11 +2,11 @@
   "object": {
     "pins": [
       {
-        "package": "Stripes",
-        "repositoryURL": "https://github.com/eneko/Stripes",
+        "package": "DateTemplates",
+        "repositoryURL": "https://github.com/eneko/DateTemplates",
         "state": {
           "branch": null,
-          "revision": "b479c70f1011e4ea945956b2bc07ab1f82c075e6",
+          "revision": "796ffd308cbebc24f433e4aa1f10a071e54ff20b",
           "version": "0.1.0"
         }
       },

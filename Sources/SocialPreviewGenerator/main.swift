@@ -14,7 +14,9 @@ struct SocialPreviewGenerator {
 
         let view = SocialPreview(
             title: "Testing Swift packages on Linux from the command line with Docker",
-            tags: ["docker", "linux", "swift"]
+            tags: ["docker", "linux", "swift"],
+            date: Date(),
+            issueNumber: 10
         )
         let wrapper = NSHostingView(rootView: view)
         wrapper.frame = CGRect(x: 0, y: 0, width: 1280, height: 640)
