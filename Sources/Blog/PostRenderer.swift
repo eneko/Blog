@@ -38,6 +38,7 @@ public struct PostRenderer {
             ---
             layout: post
             title: \(issue.title)
+            desc: Issue #\(issue.number)
             permalink: /articles/:title
             date: \(Self.formatter.string(from: issue.createdAt))
             keywords: \(keywords)

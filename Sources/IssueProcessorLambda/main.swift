@@ -1,3 +1,10 @@
+//
+//  PostRenderer.swift
+//
+//
+//  Created by Eneko Alonso on 12/22/20.
+//
+
 import AWSLambdaRuntime
 import AWSLambdaEvents
 import Dispatch

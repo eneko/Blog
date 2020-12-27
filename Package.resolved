@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "Stripes",
+        "repositoryURL": "https://github.com/eneko/Stripes",
+        "state": {
+          "branch": null,
+          "revision": "b479c70f1011e4ea945956b2bc07ab1f82c075e6",
+          "version": "0.1.0"
+        }
+      },
+      {
         "package": "swift-aws-lambda-runtime",
         "repositoryURL": "https://github.com/swift-server/swift-aws-lambda-runtime",
         "state": {
@@ -21,7 +30,7 @@
       },
       {
         "package": "swift-log",
-        "repositoryURL": "https://github.com/apple/swift-log.git",
+        "repositoryURL": "https://github.com/apple/swift-log",
         "state": {
           "branch": null,
           "revision": "173f567a2dfec11d74588eea82cecea555bdc0bc",
