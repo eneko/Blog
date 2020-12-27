@@ -19,7 +19,7 @@ struct SocialPreviewGenerator {
             fatalError("Missing JSON payload.")
         }
         guard let issue = try? decode(json: arguments[1]) else {
-            fatalError("Invalid JSON payload.")
+            fatalError("Failed to parse JSON payload.")
         }
 //        if issue.labels.contains(where: { $0.name.lowercased() == "draft" }) {
 //            print("Draft label found. Skipping media preview generation.")
