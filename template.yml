@@ -19,3 +19,22 @@ Resources:
               Queue: arn:aws:sqs:us-west-2:855037544458:blog-issue-updates
               BatchSize: 10
               Enabled: true
+
+  BlogMediaBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    Properties:
+      BucketName: eneko-blog-media
+      AccessControl: PublicRead
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders:
+              - '*'
+            AllowedMethods:
+              - GET
+            AllowedOrigins:
+              - '*'
+            ExposedHeaders:
+              - Date
+            Id: myCORSRuleId1
+            MaxAge: '3600'

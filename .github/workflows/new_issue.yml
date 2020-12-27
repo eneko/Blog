@@ -9,13 +9,20 @@ jobs:
     runs-on: macos-latest
     if: ${{ github.event.issue.user.login == github.repository_owner }} # only owner issues
     steps:
+      - name: Check-out
+        uses: actions/checkout@master
+      - name: Generate Preview
+        run: |
+          swift run socialpreview "Hello from GitHub Actions!" 25
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-2
-      - run: |
-          aws s3 ls
+      - name: Copy to S3
+        run: |
+          aws s3 cp issue-25.png s3://eneko-blog-media/social-preview/issue-25.png --acl public-read
+
   pushToSNS:
     needs: generateSocialPreview
     runs-on: ubuntu-latest
