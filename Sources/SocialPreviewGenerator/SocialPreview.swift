@@ -39,16 +39,16 @@ struct SocialPreview: View {
                 Spacer(minLength: 0)
                 VStack(alignment: .leading) {
                     Text("enekoalonso.com")
-                        .font(.custom("SF Pro Display", size: 24))
+                        .font(.system(size: 24))
                     Text(title)
-                        .font(.custom("SF Pro Display", size: 64))
+                        .font(.system(size: 64))
                         .fontWeight(.bold)
                 }
                 HStack {
                     ForEach(0..<tags.count) { index in
                         let tag = tags[index]
                         Text(tag)
-                            .font(.custom("SF Pro Display", size: 24))
+                            .font(.system(size: 24))
                             .fontWeight(.bold)
                             .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
                             .overlay(
@@ -67,7 +67,7 @@ struct SocialPreview: View {
                     Text(dateTemplate.localizedString(from: date))
                         .font(.system(size: 18))
                 }
-                .font(.custom("SF Pro Display", size: 24))
+                .font(.system(size: 24))
             }
             .padding(80)
         }
