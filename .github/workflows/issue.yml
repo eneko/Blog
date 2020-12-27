@@ -11,6 +11,9 @@ jobs:
     steps:
       - name: Check-out
         uses: actions/checkout@master
+      - name: Copy Fonts
+        run: |
+          cp Fonts/* ~/Library/Fonts/
       - name: Generate Preview
         run: |
           swift run socialpreview "Hello from GitHub Actions!" 25
