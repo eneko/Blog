@@ -42,6 +42,8 @@ struct SocialPreviewGenerator {
     }
 
     static func decode(json: String) throws -> GitHubIssue {
+        print("Input:")
+        print(json)
         let parser = IssueParser(logger: Logger(label: "Social Media Preview"))
         return try parser.parseIssue(json: json)
     }
