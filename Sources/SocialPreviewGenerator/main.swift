@@ -20,10 +20,10 @@ struct SocialPreviewGenerator {
         }
         let json = try String(contentsOfFile: arguments[1])
         let issue = try decode(json: json)
-//        if issue.labels.contains(where: { $0.name.lowercased() == "draft" }) {
-//            print("Draft label found. Skipping media preview generation.")
-//            return
-//        }
+        if issue.labels.contains(where: { $0.name.lowercased() == "draft" }) {
+            print("Draft label found. Skipping media preview generation.")
+            return
+        }
 
         let title = issue.title
         let tags = issue.labels.map { $0.name }
