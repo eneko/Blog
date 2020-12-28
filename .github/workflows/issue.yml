@@ -34,7 +34,7 @@ jobs:
           aws s3 cp issue-${{github.event.issue.number}}.png s3://eneko-blog-media/social-preview/issue-${{github.event.issue.number}}.png --acl public-read
 
   pushToSNS:
-    needs: generateSocialPreview
+    #needs: generateSocialPreview
     runs-on: ubuntu-latest
     if: ${{ github.event.issue.user.login == github.repository_owner }} # only owner issues
     steps:
