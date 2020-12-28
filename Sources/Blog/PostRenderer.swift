@@ -41,6 +41,7 @@ public struct PostRenderer {
             title: \(issue.title)
             desc: Issue #\(issue.number)
             permalink: /articles/:title
+            image: https://eneko-blog-media.s3-us-west-2.amazonaws.com/social-preview/issue-\(issue.number).png
             date: \(Self.formatter.string(from: issue.createdAt))
             keywords: \(keywords)
             tags: \(tags)

@@ -31,7 +31,7 @@ jobs:
           aws-region: us-east-2
       - name: Copy to S3
         run: |
-          aws s3 cp issue-25.png s3://eneko-blog-media/social-preview/issue-${{github.event.issue.number}}.png --acl public-read
+          aws s3 cp issue-${{github.event.issue.number}}.png s3://eneko-blog-media/social-preview/issue-${{github.event.issue.number}}.png --acl public-read
 
   pushToSNS:
     needs: generateSocialPreview
