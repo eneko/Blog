@@ -30,9 +30,8 @@ public struct PostRenderer {
     }
 
     public func render() -> String {
-        let labels = issue.labels.map { $0.name.replacingOccurrences(of: " ", with: "-") }
-        let tags = labels.joined(separator: " ")
-        let keywords = labels.joined(separator: ", ")
+        let labels = issue.labels.map { $0.name }
+        let tags = labels.joined(separator: ", ")
         let body = issue.body.replacingOccurrences(of: "\r\n", with: "\n")
 
         let post = """
@@ -43,8 +42,8 @@ public struct PostRenderer {
             permalink: /articles/:title
             image: https://eneko-blog-media.s3-us-west-2.amazonaws.com/social-preview/issue-\(issue.number).png
             date: \(Self.formatter.string(from: issue.createdAt))
-            keywords: \(keywords)
-            tags: \(tags)
+            keywords: \(tags)
+            tags: [\(tags)]
             ---
 
             <span class="issue-number"><b>Issue <a target="_blank" href="https://github.com/eneko/Blog/issues/\(issue.number)">#\(issue.number)</a></b></span>
