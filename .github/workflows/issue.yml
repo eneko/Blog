@@ -19,7 +19,7 @@ jobs:
         uses: DamianReeves/write-file-action@v1.0
         with:
           path: issue.json
-          contents: ${{ github.event.issue }}
+          contents: ${{ toJSON(github.event.issue) }}
           write-mode: overwrite
       - name: Generate Preview
         run: |
