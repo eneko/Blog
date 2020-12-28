@@ -16,7 +16,7 @@ struct SocialPreviewGenerator {
     static func main() throws {
         let arguments = ProcessInfo.processInfo.arguments
         guard arguments.count == 2 else {
-            fatalError("Missing JSON payload.")
+            fatalError("Missing JSON payload filename.")
         }
         let json = try String(contentsOfFile: arguments[1])
         let issue = try decode(json: json)
@@ -41,8 +41,6 @@ struct SocialPreviewGenerator {
     }
 
     static func decode(json: String) throws -> GitHubIssue {
-        print("Input:")
-        print(json)
         let parser = IssueParser(logger: Logger(label: "Social Media Preview"))
         return try parser.parseIssue(json: json)
     }
