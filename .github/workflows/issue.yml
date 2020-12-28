@@ -15,9 +15,16 @@ jobs:
         run: |
           mkdir -p ~/Library/Fonts/
           cp Fonts/* ~/Library/Fonts/
+      - name: Write File
+        uses: DamianReeves/write-file-action@v1.0
+        with:
+          path: issue.json
+          contents: ${{ github.event.issue }}
+          write-mode: overwrite
       - name: Generate Preview
         run: |
-          swift run socialpreview ${{ toJSON(github.event.issue) }}
+          cat issue.json
+          swift run socialpreview issue.json
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}

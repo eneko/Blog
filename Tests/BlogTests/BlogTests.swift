@@ -27,7 +27,7 @@ final class BlogTests: XCTestCase {
     }
 
     func testRenderer() throws {
-        let logger = Logger(label: "parser-test")
+        let logger = Logger(label: "renderer-test")
         let parser = IssueParser(logger: logger)
         let payload = try parser.parseContext(json: gitHubIssueEvent)
         let post = PostRenderer(issue: payload.event.issue).render()
@@ -35,10 +35,18 @@ final class BlogTests: XCTestCase {
     }
 
     func testRendererFilename() throws {
-        let logger = Logger(label: "parser-test")
+        let logger = Logger(label: "filename-test")
         let parser = IssueParser(logger: logger)
         let payload = try parser.parseContext(json: gitHubIssueEvent)
         let filename = PostRenderer(issue: payload.event.issue).filename
         XCTAssertEqual(filename, "_posts/2020-12-22-issue-4.md")
     }
+
+//    func testParseIssue() throws {
+//        let logger = Logger(label: "issue-test")
+//        let parser = IssueParser(logger: logger)
+//        let payload = try parser.parseIssue(json: mockIssue)
+//        XCTAssertEqual(payload.title, "Generating Social Media preview images with SwiftUI and GitHub Actions")
+//        XCTAssertEqual(payload.labels.count, 4)
+//    }
 }
