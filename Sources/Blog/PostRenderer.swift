@@ -43,6 +43,7 @@ public struct PostRenderer {
             date: \(Self.formatter.string(from: issue.createdAt))
             keywords: \(tags)
             tags: [\(tags)]
+            issue: \(issue.number)
             ---
 
             \(body)
