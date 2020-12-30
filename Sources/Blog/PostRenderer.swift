@@ -45,8 +45,6 @@ public struct PostRenderer {
             tags: [\(tags)]
             ---
 
-            <span class="issue-number"><b>Issue <a target="_blank" href="https://github.com/eneko/Blog/issues/\(issue.number)">#\(issue.number)</a></b></span>
-
             \(body)
 
             ---
