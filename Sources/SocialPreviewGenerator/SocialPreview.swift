@@ -11,8 +11,8 @@ import SwiftUI
 import DateTemplates
 
 struct SocialPreview: View {
-    let brandColor = Color(#colorLiteral(red: 0.1843137255, green: 0.5411764706, blue: 1, alpha: 1))
-    let textColor = Color.white
+    let backgroundColor: Color
+    let foregroundColor: Color
     let dateTemplate = DateTemplate().month(.full).day().year()
 
     let title: String
@@ -53,7 +53,7 @@ struct SocialPreview: View {
                             .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
                             .overlay(
                                 RoundedRectangle(cornerRadius: 10)
-                                    .stroke(textColor, lineWidth: 2)
+                                    .stroke(foregroundColor, lineWidth: 2)
                             )
                     }
                 }
@@ -72,8 +72,8 @@ struct SocialPreview: View {
             .padding(80)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .foregroundColor(textColor)
-        .background(brandColor)
+        .foregroundColor(foregroundColor)
+        .background(backgroundColor)
     }
 
     func binary(title: String) -> String {
@@ -87,7 +87,9 @@ struct SocialPreview: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        SocialPreview(title: "Testing Swift packages on Linux from the command line with Docker", tags: ["docker", "linux"], date: Date(), issueNumber: 10)
+        SocialPreview(backgroundColor: Color(#colorLiteral(red: 0.1843137255, green: 0.5411764706, blue: 1, alpha: 1)), foregroundColor: .white,
+                      title: "Testing Swift packages on Linux from the command line with Docker",
+                      tags: ["docker", "linux"], date: Date(), issueNumber: 10)
             .frame(width: 1280, height: 640)
     }
 }

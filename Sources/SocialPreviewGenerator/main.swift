@@ -31,7 +31,15 @@ struct SocialPreviewGenerator {
 
         print("Generating Social Preview for issue #\(number)")
 
-        let view = SocialPreview(title: title, tags: tags, date: date, issueNumber: number)
+        let (background, foreground) = colors(from: issue)
+        let view = SocialPreview(
+            backgroundColor: background,
+            foregroundColor: foreground,
+            title: title,
+            tags: tags,
+            date: date,
+            issueNumber: number
+        )
         let wrapper = NSHostingView(rootView: view)
         wrapper.frame = CGRect(x: 0, y: 0, width: 1280, height: 640)
 
@@ -42,6 +50,25 @@ struct SocialPreviewGenerator {
     static func decode(json: String) throws -> GitHubIssue {
         let parser = IssueParser(logger: Logger(label: "Social Media Preview"))
         return try parser.parseIssue(json: json)
+    }
+
+    /// Select colors for social media preview based on labels. Labels are prioritized as ordered below (from less common to more common).
+    static func colors(from issue: GitHubIssue) -> (background: Color, foreground: Color) {
+        let customLabels = [
+            "Challenge",
+            "Command Line",
+            "SwiftUI",
+            "AWS",
+            "Linux",
+            "GitHub Actions",
+            "Tips",
+        ]
+        for name in customLabels {
+            if let label = issue.labels.first(where: { $0.name == name }) {
+                return (background: ColorParser().parse(color: label.color), foreground: .white)
+            }
+        }
+        return (background: Color(#colorLiteral(red: 0.1843137255, green: 0.5411764706, blue: 1, alpha: 1)), foreground: .white)
     }
 
     static func rasterize(view: NSView, format: NSBitmapImageRep.FileType) -> Data? {
