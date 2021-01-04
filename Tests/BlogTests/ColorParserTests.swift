@@ -5,19 +5,21 @@
 //  Created by Eneko Alonso on 1/3/21.
 //
 
+#if canImport(SwiftUI)
+
 import XCTest
 import IssueParser
 
 final class ColorParserTests: XCTestCase {
 
-//    func testByte() {
-//        let parser = ColorParser()
-//        XCTAssertEqual(parser.byte(from: "00"), 0)
-//        XCTAssertEqual(parser.byte(from: "0F"), 15)
-//        XCTAssertEqual(parser.byte(from: "7F"), 127)
-//        XCTAssertEqual(parser.byte(from: "FF"), 255)
-//    }
-//
+    func testByte() {
+        let parser = ColorParser()
+        XCTAssertEqual(parser.byte(from: "00"), 0)
+        XCTAssertEqual(parser.byte(from: "0F"), 15)
+        XCTAssertEqual(parser.byte(from: "7F"), 127)
+        XCTAssertEqual(parser.byte(from: "FF"), 255)
+    }
+
 //    func testColor() {
 //        let parser = ColorParser()
 //
@@ -28,3 +30,5 @@ final class ColorParserTests: XCTestCase {
 //    }
 
 }
+
+#endif

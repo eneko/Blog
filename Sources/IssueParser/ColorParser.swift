@@ -1,9 +1,11 @@
 //
-//  File.swift
+//  ColorParser.swift
 //  
 //
 //  Created by Eneko Alonso on 1/3/21.
 //
+
+#if canImport(SwiftUI)
 
 import SwiftUI
 
@@ -26,3 +28,5 @@ public struct ColorParser {
     }
 
 }
+
+#endif
