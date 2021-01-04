@@ -11,10 +11,6 @@ jobs:
     steps:
       - name: Check-out
         uses: actions/checkout@master
-      - name: Copy Fonts
-        run: |
-          mkdir -p ~/Library/Fonts/
-          cp Fonts/* ~/Library/Fonts/
       - name: Write File
         uses: DamianReeves/write-file-action@v1.0
         with:
