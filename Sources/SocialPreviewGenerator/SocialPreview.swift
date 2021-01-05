@@ -22,6 +22,8 @@ struct SocialPreview: View {
 
     var body: some View {
         ZStack{
+            TriangleStack(text: String(title.prefix(11)))
+
             VStack {
                 HStack() {
                     Spacer(minLength: 0)
