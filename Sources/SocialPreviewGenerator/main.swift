@@ -72,11 +72,17 @@ struct SocialPreviewGenerator {
     }
 
     static func rasterize(view: NSView, format: NSBitmapImageRep.FileType) -> Data? {
+//        [[NSGraphicsContext currentContext] setImageInterpolation:NSImageInterpolationHigh];
+//        NSGraphicsContext.current?.imageInterpolation = .high
         guard let bitmapRepresentation = view.bitmapImageRepForCachingDisplay(in: view.bounds) else {
             return nil
         }
+//        bitmapRepresentation.colorSpace = NSColorSpace.deviceRGB
         bitmapRepresentation.size = view.bounds.size
+//        bitmapRepresentation.scale
+        dump(bitmapRepresentation)
         view.cacheDisplay(in: view.bounds, to: bitmapRepresentation)
+        dump(bitmapRepresentation)
         return bitmapRepresentation.representation(using: format, properties: [:])
     }
 }
