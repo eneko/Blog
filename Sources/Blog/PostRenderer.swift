@@ -40,7 +40,7 @@ public struct PostRenderer {
             title: \(issue.title)
             permalink: /articles/:title
             image: https://eneko-blog-media.s3-us-west-2.amazonaws.com/social-preview/issue-\(issue.number).png
-            date: \(Self.formatter.string(from: issue.createdAt))
+            date: \(Self.formatter.string(from: issue.closedAt ?? issue.createdAt))
             keywords: \(tags)
             tags: [\(tags)]
             issue: \(issue.number)
@@ -50,7 +50,12 @@ public struct PostRenderer {
 
             ---
 
-            <i><small>This article was written as an issue on my Blog repository on GitHub (see <a target="_blank" href="https://github.com/eneko/Blog/issues/\(issue.number)">Issue #\(issue.number)</a>)</small></i>
+            <div class="post-closure">
+                <p>This article was written as an issue on my Blog repository on GitHub (see <a target="_blank" href="https://github.com/eneko/Blog/issues/\(issue.number)">Issue #\(issue.number)</a>)</p>
+                <p>First draft: \(Self.formatter.string(from: issue.createdAt))</p>
+                <p>Published on: \(Self.formatter.string(from: issue.closedAt ?? issue.createdAt))</p>
+                <p>Last update: \(Self.formatter.string(from: issue.updatedAt))</p>
+            </div>
             """
         return post
     }

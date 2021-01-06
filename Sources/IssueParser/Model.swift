@@ -25,6 +25,7 @@ public struct GitHubIssue: Codable {
     public let labels: [GitHubLabel]
     public let createdAt: Date
     public let updatedAt: Date
+    public let closedAt: Date?
 }
 
 public struct GitHubLabel: Codable {
