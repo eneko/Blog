@@ -62,6 +62,8 @@ struct SocialPreviewGenerator {
             "Linux",
             "GitHub Actions",
             "Tips",
+            "Xcode",
+            "Swift"
         ]
         for name in customLabels {
             if let label = issue.labels.first(where: { $0.name == name }) {
