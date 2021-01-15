@@ -33,17 +33,20 @@ public struct PostRenderer {
         let labels = issue.labels.map { $0.name }
         let tags = labels.joined(separator: ", ")
         let body = issue.body.replacingOccurrences(of: "\r\n", with: "\n")
+        let permalink = Self.permalink(from: issue.title)
 
         let post = """
             ---
             layout: post
             title: \(issue.title)
-            permalink: /articles/:title
+            permalink: /articles/\(permalink)
             image: https://eneko-blog-media.s3-us-west-2.amazonaws.com/social-preview/issue-\(issue.number).png
             date: \(Self.formatter.string(from: issue.closedAt ?? issue.createdAt))
             keywords: \(tags)
             tags: [\(tags)]
             issue: \(issue.number)
+            redirect_from:
+              - /articles/issue-\(issue.number)
             ---
 
             \(body)
@@ -58,5 +61,20 @@ public struct PostRenderer {
             </div>
             """
         return post
+    }
+
+    static func permalink(from title: String) -> String {
+        let alphanumerics = CharacterSet.alphanumerics
+        var last = ""
+        return title.unicodeScalars.map { scalar in
+            if alphanumerics.contains(scalar) {
+                last = String(scalar).lowercased()
+            } else if last == "-" {
+                return "" // prevent consecutive dashes
+            } else {
+                last = "-"
+            }
+            return last
+        }.joined()
     }
 }
