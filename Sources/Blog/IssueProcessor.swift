@@ -22,6 +22,7 @@ struct WorkflowDispatch: Codable {
     }
 }
 
+@available(macOS 9999, iOS 9999, watchOS 9999, tvOS 9999, *)
 public struct IssueProcessor {
     let endpoint = "https://api.github.com/repos/eneko/eneko.github.io/actions/workflows/4476169/dispatches"
 
@@ -36,7 +37,7 @@ public struct IssueProcessor {
         accessToken = ProcessInfo.processInfo.environment["GITHUB_REMOTE_UPDATE_TOKEN"] ?? "[NO TOKEN]"
     }
 
-    public func process(githubEvent: GitHubEvent, completion: @escaping () -> Void) throws {
+    public func process(githubEvent: GitHubEvent) async throws {
         logger.debug("Event: \(githubEvent)")
 
         if githubEvent.issue.labels.contains(where: { $0.name.lowercased() == "draft" }) {
@@ -48,10 +49,10 @@ public struct IssueProcessor {
         let content = renderer.render()
         let filename = renderer.filename
 
-        try triggerGitHubAction(content: content, filename: filename, completion: completion)
+        try await triggerGitHubAction(content: content, filename: filename)
     }
 
-    func triggerGitHubAction(content: String, filename: String, completion: @escaping () -> Void) throws {
+    func triggerGitHubAction(content: String, filename: String) async throws {
         guard let url = URL(string: endpoint) else {
             fatalError("Failed to make URL")
         }
@@ -63,16 +64,14 @@ public struct IssueProcessor {
         request.addValue(authHeader, forHTTPHeaderField: "Authorization")
         request.httpBody = try httpBody(content: content, filename: filename)
 
-        let dataTask = URLSession.shared.dataTask(with: request) { data, _, error in
-            if let error = error {
-                self.logger.error("Failed to submit workflow dispatch request to GitHub Actions")
-                self.logger.error("\(error.localizedDescription)")
-            } else {
-                self.logger.debug("Submitted workflow dispatch request to GitHub Actions")
-            }
-            completion()
+        do {
+            _ = try await URLSession.shared.data(for: request, delegate: nil)
+            logger.debug("Submitted workflow dispatch request to GitHub Actions")
         }
-        dataTask.resume()
+        catch {
+            logger.error("Failed to submit workflow dispatch request to GitHub Actions")
+            logger.error("\(error.localizedDescription)")
+        }
     }
 
     var authHeader: String {

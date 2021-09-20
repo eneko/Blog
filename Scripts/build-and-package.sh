@@ -28,7 +28,7 @@ echo "-------------------------------------------------------------------------"
 echo "building \"$executable\" lambda"
 echo "-------------------------------------------------------------------------"
 docker run --rm -v "$workspace":/workspace -w /workspace builder \
-       bash -cl "swift build --product $executable -c release -Xswiftc -g"
+       bash -cl "swift build --product $executable -c release -Xswiftc -g -Xswiftc -Xfrontend -Xswiftc -enable-experimental-concurrency"
 echo "done"
 
 echo "-------------------------------------------------------------------------"

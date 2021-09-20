@@ -11,8 +11,10 @@ import Dispatch
 import NIO
 import Blog
 import IssueParser
+import _NIOConcurrency
 
-struct Handler: LambdaHandler {
+@available(macOS 9999, iOS 9999, watchOS 9999, tvOS 9999, *)
+struct Handler: AsyncLambdaHandler {
     typealias In = SQS.Event
     typealias Out = String // Response type
 
@@ -26,23 +28,15 @@ struct Handler: LambdaHandler {
         processor = IssueProcessor(logger: context.logger)
     }
 
-    func handle(context: Lambda.Context, event: In, callback: @escaping (Result<Out, Error>) -> Void) {
-        do {
-            let group = DispatchGroup()
-            for message in event.records {
-                group.enter()
-                let githubContext = try parser.parseContext(json: message.body)
-                try processor.process(githubEvent: githubContext.event) {
-                    group.leave()
-                }
-            }
-            group.wait()
-            callback(.success(""))
+    func handle(event: SQS.Event, context: Lambda.Context) async throws -> Out {
+        for message in event.records {
+            let githubContext = try parser.parseContext(json: message.body)
+            try await processor.process(githubEvent: githubContext.event)
         }
-        catch {
-            callback(.failure(error))
-        }
+        return ""
     }
 }
 
-Lambda.run(Handler.init)
+if #available(macOS 9999, *) {
+    Lambda.run(Handler.init)
+}
